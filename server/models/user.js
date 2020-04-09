@@ -26,8 +26,7 @@ const user = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
-                len: [7, 42]
+                notEmpty: true
             }
         }
         // organization_name: {
@@ -50,14 +49,14 @@ const user = (sequelize, DataTypes) => {
     //retrieves user by username OR email entry
     User.findByLogin = async login => {
         let user = await User.findOne({
-            where: { username: login }
+            where: { email: login }
         });
 
-        if (!user) {
-            user = await User.findOne({
-                where: { email: login }
-            });
-        }
+        // if (!user) {
+        //     user = await User.findOne({
+        //         where: { username: login }
+        //     });
+        // }
         return user;
     };
     //adds bcrypt hash to users password before user is created in database
